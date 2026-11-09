@@ -1,0 +1,295 @@
+.scoreboard-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Title */
+.scoreboard-title {
+  margin: 0;
+  text-align: center;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Game Progress */
+.game-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-counter {
+  font-size: 14px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.progress-bar-container {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.4s ease;
+  border-radius: 4px;
+}
+
+/* Players Grid */
+.players-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 15px;
+  align-items: start;
+}
+
+/* Player Card */
+.player-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.player-card.player-1 {
+  border-left-color: #667eea;
+  background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+}
+
+.player-card.player-2 {
+  border-left-color: #764ba2;
+  background: linear-gradient(135deg, #faf5ff 0%, #ffffff 100%);
+}
+
+.player-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Player Info */
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.player-symbol {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 20px;
+  font-weight: bold;
+  background: white;
+  border: 2px solid #ddd;
+}
+
+.player-card.player-1 .player-symbol {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.player-card.player-2 .player-symbol {
+  border-color: #764ba2;
+  color: #764ba2;
+}
+
+/* Player Stats */
+.player-stats {
+  display: flex;
+  gap: 10px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #999;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.player-card.player-1 .stat-value {
+  color: #667eea;
+}
+
+.player-card.player-2 .stat-value {
+  color: #764ba2;
+}
+
+/* Center Stats (Draws) */
+.center-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+}
+
+.draws-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #f0a500;
+}
+
+.draws-label {
+  font-size: 11px;
+  color: #999;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.draws-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f0a500;
+}
+
+/* Format Info */
+.format-info {
+  text-align: center;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+
+.format-text {
+  margin: 0;
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+}
+
+/* No Tournament */
+.no-tournament {
+  text-align: center;
+  color: #999;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .scoreboard-container {
+    padding: 15px;
+  }
+
+  .players-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .center-stats {
+    order: -1;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  .player-card {
+    padding: 12px;
+  }
+
+  .player-name {
+    font-size: 13px;
+  }
+
+  .player-symbol {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  .draws-value {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scoreboard-title {
+    font-size: 16px;
+  }
+
+  .game-counter {
+    font-size: 12px;
+  }
+
+  .player-name {
+    font-size: 12px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .draws-label {
+    font-size: 10px;
+  }
+
+  .draws-value {
+    font-size: 16px;
+  }
+}

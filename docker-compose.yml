@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  tic-tac-toe-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tic-tac-toe-tournament
+    ports:
+      - "4200:4200"
+      - "4201:4201"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - ANGULAR_CLI_ANALYTICS=false
+    command: npm start
+    stdin_open: true
+    tty: true
+    networks:
+      - tic-tac-toe-network
+
+networks:
+  tic-tac-toe-network:
+    driver: bridge

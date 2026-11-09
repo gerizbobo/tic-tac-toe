@@ -1,0 +1,155 @@
+<div class="player-setup-container">
+  <div class="setup-card">
+    <!-- Header -->
+    <div class="setup-header">
+      <h1 class="setup-title">Tic Tac Toe Tournament</h1>
+      <p class="setup-subtitle">Configure Players & Tournament Format</p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="playerSetupForm" (ngSubmit)="startTournament()">
+      <!-- Players Section -->
+      <div class="form-section">
+        <h2 class="section-title">Player Configuration</h2>
+
+        <!-- Player 1 -->
+        <div class="player-input-group">
+          <label class="input-label">Player 1 Name *</label>
+          <input
+            type="text"
+            class="text-input"
+            formControlName="player1Name"
+            placeholder="Enter player 1 name"
+            [class.input-error]="hasError('player1Name', 'required') || hasError('player1Name', 'minlength')"
+          />
+          <div class="error-message" *ngIf="hasError('player1Name', 'required')">
+            Player 1 name is required
+          </div>
+          <div class="error-message" *ngIf="hasError('player1Name', 'minlength')">
+            Name must be at least 2 characters
+          </div>
+        </div>
+
+        <!-- Player 1 Symbol Selection -->
+        <div class="symbol-selection">
+          <label class="input-label">Player 1 Symbol *</label>
+          <div class="symbol-options">
+            <button
+              type="button"
+              class="symbol-btn"
+              [class.selected]="playerSetupForm.get('player1Symbol')?.value === 'X'"
+              (click)="playerSetupForm.get('player1Symbol')?.setValue('X')"
+            >
+              X
+            </button>
+            <button
+              type="button"
+              class="symbol-btn"
+              [class.selected]="playerSetupForm.get('player1Symbol')?.value === 'O'"
+              (click)="playerSetupForm.get('player1Symbol')?.setValue('O')"
+            >
+              O
+            </button>
+          </div>
+        </div>
+
+        <!-- Player 2 -->
+        <div class="player-input-group">
+          <label class="input-label">Player 2 Name *</label>
+          <input
+            type="text"
+            class="text-input"
+            formControlName="player2Name"
+            placeholder="Enter player 2 name"
+            [class.input-error]="hasError('player2Name', 'required') || hasError('player2Name', 'minlength')"
+          />
+          <div class="error-message" *ngIf="hasError('player2Name', 'required')">
+            Player 2 name is required
+          </div>
+          <div class="error-message" *ngIf="hasError('player2Name', 'minlength')">
+            Name must be at least 2 characters
+          </div>
+        </div>
+
+        <!-- Player 2 Symbol (Auto-assigned) -->
+        <div class="symbol-display">
+          <label class="input-label">Player 2 Symbol (Auto-assigned)</label>
+          <div class="symbol-display-value">
+            {{ getPlayer2Symbol() }}
+          </div>
+        </div>
+
+        <!-- Duplicate Names Error -->
+        <div class="error-message" *ngIf="hasSameNamesError()">
+          Player names must be different
+        </div>
+      </div>
+
+      <!-- Tournament Format Section -->
+      <div class="form-section">
+        <h2 class="section-title">Tournament Format</h2>
+
+        <label class="input-label">Number of Games *</label>
+        <div class="format-options">
+          <button
+            type="button"
+            class="format-btn"
+            [class.selected]="playerSetupForm.get('tournamentFormat')?.value === 1"
+            (click)="playerSetupForm.get('tournamentFormat')?.setValue(1)"
+          >
+            <span class="format-number">1</span>
+            <span class="format-label">Single Game</span>
+          </button>
+
+          <button
+            type="button"
+            class="format-btn"
+            [class.selected]="playerSetupForm.get('tournamentFormat')?.value === 3"
+            (click)="playerSetupForm.get('tournamentFormat')?.setValue(3)"
+          >
+            <span class="format-number">3</span>
+            <span class="format-label">Best of 3</span>
+          </button>
+
+          <button
+            type="button"
+            class="format-btn"
+            [class.selected]="playerSetupForm.get('tournamentFormat')?.value === 5"
+            (click)="playerSetupForm.get('tournamentFormat')?.setValue(5)"
+          >
+            <span class="format-number">5</span>
+            <span class="format-label">Best of 5</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Section -->
+      <div class="form-section summary-section">
+        <h3 class="summary-title">Tournament Summary</h3>
+        <div class="summary-details">
+          <div class="summary-item">
+            <span class="summary-label">Player 1:</span>
+            <span class="summary-value">{{ playerSetupForm.get('player1Name')?.value || 'N/A' }} ({{ playerSetupForm.get('player1Symbol')?.value }})</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Player 2:</span>
+            <span class="summary-value">{{ playerSetupForm.get('player2Name')?.value || 'N/A' }} ({{ getPlayer2Symbol() }})</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Format:</span>
+            <span class="summary-value">Best of {{ playerSetupForm.get('tournamentFormat')?.value }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button
+        type="submit"
+        class="start-btn"
+        [disabled]="!playerSetupForm.valid"
+      >
+        Start Tournament
+      </button>
+    </form>
+  </div>
+</div>

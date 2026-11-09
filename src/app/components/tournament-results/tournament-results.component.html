@@ -1,0 +1,116 @@
+<div class="results-container" *ngIf="(tournament$ | async) as tournament; else noResults">
+  <!-- Winner Announcement Modal -->
+  <div class="winner-announcement" *ngIf="tournament.isCompleted && !showFullResults">
+    <div class="winner-card">
+      <div class="trophy-icon" *ngIf="!isTournamentDraw(tournament)">🏆</div>
+      <div class="draw-icon" *ngIf="isTournamentDraw(tournament)">🤝</div>
+      
+      <h1 class="winner-title" [class.draw]="isTournamentDraw(tournament)">
+        {{ getFinalMessage(tournament) }}
+      </h1>
+      
+      <div class="announcement-buttons">
+        <button class="play-again-button" (click)="startNewTournament()">
+          Play Again
+        </button>
+        <button class="view-results-button" (click)="showFullResults = true">
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Results Overlay -->
+  <div class="results-overlay" *ngIf="tournament.isCompleted && showFullResults">
+    <div class="results-card">
+      <!-- Header -->
+      <div class="results-header">
+        <div class="trophy-icon" *ngIf="!isTournamentDraw(tournament)">🏆</div>
+        <div class="draw-icon" *ngIf="isTournamentDraw(tournament)">🤝</div>
+        
+        <h1 class="results-title" [class.draw]="isTournamentDraw(tournament)">
+          {{ getFinalMessage(tournament) }}
+        </h1>
+      </div>
+
+      <!-- Final Scores -->
+      <div class="final-scores">
+        <!-- Player 1 Score -->
+        <div class="score-card">
+          <h3 class="score-player-name">{{ tournament.player1.name }}</h3>
+          <div class="score-symbol player-1-symbol">{{ tournament.player1.symbol }}</div>
+          <div class="score-value">{{ tournament.player1.wins }}</div>
+          <div class="score-label">Wins</div>
+          <div class="win-percentage" [class.winner]="tournament.winner?.id === 1">
+            {{ getWinPercentage(tournament, 1) }}
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="score-divider">
+          <span class="vs-text">VS</span>
+        </div>
+
+        <!-- Player 2 Score -->
+        <div class="score-card">
+          <h3 class="score-player-name">{{ tournament.player2.name }}</h3>
+          <div class="score-symbol player-2-symbol">{{ tournament.player2.symbol }}</div>
+          <div class="score-value">{{ tournament.player2.wins }}</div>
+          <div class="score-label">Wins</div>
+          <div class="win-percentage" [class.winner]="tournament.winner?.id === 2">
+            {{ getWinPercentage(tournament, 2) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Tournament Stats -->
+      <div class="tournament-stats">
+        <div class="stat-item">
+          <span class="stat-label">Total Games Played</span>
+          <span class="stat-value">{{ tournament.totalGames }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Draws</span>
+          <span class="stat-value">{{ tournament.draws }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Format</span>
+          <span class="stat-value">Best of {{ tournament.totalGames }}</span>
+        </div>
+      </div>
+
+      <!-- Game History -->
+      <div class="game-history" *ngIf="tournament.gameHistory.length > 0">
+        <h3 class="history-title">Game History</h3>
+        <div class="history-list">
+          <div
+            class="history-item"
+            *ngFor="let game of tournament.gameHistory; let i = index"
+            [class.winner-p1]="game.winner?.id === 1"
+            [class.winner-p2]="game.winner?.id === 2"
+            [class.draw]="game.isDraw"
+          >
+            <span class="game-number">Game {{ i + 1 }}</span>
+            <span class="game-result">{{ getGameResult(tournament, i) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="play-again-btn" (click)="startNewTournament()">
+          Play Another Tournament
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- No Results -->
+<ng-template #noResults>
+  <div class="results-container">
+    <div class="no-results">
+      <p>No tournament completed yet</p>
+    </div>
+  </div>
+</ng-template>

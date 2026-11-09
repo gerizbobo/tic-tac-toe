@@ -1,0 +1,76 @@
+<div class="scoreboard-container" *ngIf="(tournament$ | async) as tournament; else noTournament">
+  <div class="scoreboard">
+    <!-- Title -->
+    <h2 class="scoreboard-title">Tournament Scoreboard</h2>
+
+    <!-- Game Progress -->
+    <div class="game-progress">
+      <div class="progress-info">
+        <span class="game-counter">{{ getGameCounterText(tournament) }}</span>
+      </div>
+      <div class="progress-bar-container">
+        <div
+          class="progress-bar"
+          [style.width.%]="getProgressPercentage(tournament)"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Players Section -->
+    <div class="players-grid">
+      <!-- Player 1 Card -->
+      <div [class]="getPlayerCardClass(1)">
+        <div class="player-info">
+          <div class="player-header">
+            <h3 class="player-name">{{ tournament.player1.name }}</h3>
+            <div class="player-symbol">{{ tournament.player1.symbol }}</div>
+          </div>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-label">Wins</span>
+              <span class="stat-value">{{ tournament.player1.wins }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Stats -->
+      <div class="center-stats">
+        <div class="draws-stat">
+          <span class="draws-label">Draws</span>
+          <span class="draws-value">{{ tournament.draws }}</span>
+        </div>
+      </div>
+
+      <!-- Player 2 Card -->
+      <div [class]="getPlayerCardClass(2)">
+        <div class="player-info">
+          <div class="player-header">
+            <h3 class="player-name">{{ tournament.player2.name }}</h3>
+            <div class="player-symbol">{{ tournament.player2.symbol }}</div>
+          </div>
+          <div class="player-stats">
+            <div class="stat">
+              <span class="stat-label">Wins</span>
+              <span class="stat-value">{{ tournament.player2.wins }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Format Info -->
+    <div class="format-info">
+      <p class="format-text">Format: Best of {{ tournament.totalGames }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- No Tournament -->
+<ng-template #noTournament>
+  <div class="scoreboard-container">
+    <div class="scoreboard">
+      <p class="no-tournament">No tournament started yet</p>
+    </div>
+  </div>
+</ng-template>

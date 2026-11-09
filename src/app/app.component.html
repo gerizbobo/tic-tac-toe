@@ -1,0 +1,19 @@
+<div class="app-container">
+  <!-- Player Setup Screen -->
+  <div *ngIf="showSetup" class="screen setup-screen">
+    <app-player-setup></app-player-setup>
+  </div>
+
+  <!-- Game Screen -->
+  <div *ngIf="showGame" class="screen game-screen">
+    <div class="game-layout">
+      <app-scoreboard></app-scoreboard>
+      <app-game-board (gameFinished)="onGameFinished()"></app-game-board>
+    </div>
+  </div>
+
+  <!-- Tournament Results Screen -->
+  <div *ngIf="showResults" class="screen results-screen">
+    <app-tournament-results></app-tournament-results>
+  </div>
+</div>

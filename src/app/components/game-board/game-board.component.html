@@ -1,0 +1,80 @@
+<div class="game-board-container" *ngIf="gameState$ | async as gameState">
+  <div class="game-content">
+    
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <p class="status-message" [class.draw]="gameState.isDraw">
+        {{ getStatusMessage() }}
+      </p>
+    </div>
+
+    <!-- Game Board Grid -->
+    <div class="board-wrapper">
+      <div class="board">
+        <button
+          *ngFor="let cell of gameState.board; let i = index"
+          class="cell"
+          [class.cell-x]="cell === 'X'"
+          [class.cell-o]="cell === 'O'"
+          [class.disabled]="isCellDisabled(i)"
+          (click)="onCellClick(i)"
+          [disabled]="isCellDisabled(i)"
+        >
+          {{ cell }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Game Result Message -->
+    <div class="game-result" *ngIf="gameState.isGameOver">
+      <div class="result-card">
+        <div class="result-icon" *ngIf="gameState.isDraw">
+          <span>🤝</span>
+        </div>
+        <div class="result-icon" *ngIf="!gameState.isDraw">
+          <span>🎉</span>
+        </div>
+
+        <h2 class="result-text" *ngIf="gameState.isDraw">Draw!</h2>
+        <h2 class="result-text" *ngIf="!gameState.isDraw">{{ getWinner()?.name }} Wins!</h2>
+
+        <div class="action-buttons">
+          <!-- Play Next Game (if tournament not complete) -->
+          <button
+            class="next-game-btn"
+            *ngIf="hasMoreGames()"
+            (click)="proceedToNextGame()"
+          >
+            Play Next Game
+          </button>
+
+          <!-- Tournament Complete - Not a Draw -->
+          <button
+            class="results-btn"
+            *ngIf="isTournamentComplete() && !isTournamentDraw()"
+            (click)="finishTournament()"
+          >
+            View Final Results
+          </button>
+
+          <!-- Tournament Complete - It's a Draw: Show both options -->
+          <button
+            class="next-game-btn"
+            *ngIf="isTournamentComplete() && isTournamentDraw()"
+            (click)="extendTournament()"
+          >
+            🔄 Play Rematch (+1 Game)
+          </button>
+
+          <button
+            class="results-btn"
+            *ngIf="isTournamentComplete() && isTournamentDraw()"
+            (click)="finishTournament()"
+          >
+            Accept Draw - View Results
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
