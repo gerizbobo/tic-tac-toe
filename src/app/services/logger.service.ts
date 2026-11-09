@@ -15,18 +15,7 @@ export interface LogEntry {
   stackTrace?: string;
 }
 
-/**
- * LoggerService
- * Provides centralized logging for the Tic Tac Toe Tournament application
- * 
- * Features:
- * - Console logging with color coding
- * - In-memory log storage
- * - LocalStorage persistence
- * - Log level filtering
- * - Export logs to JSON/CSV format
- * - Download logs as file
- */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,20 +33,11 @@ export class LoggerService {
     this.logInfo('Logger Service Initialized');
   }
 
-  /**
-   * Set the minimum log level to display
-   * 
-   * @param level - The minimum log level to show
-   */
   public setLogLevel(level: LogLevel): void {
     this.currentLogLevel = level;
   }
 
-  /**
-   * Enable or disable console output
-   * 
-   * @param enable - Whether to enable console output
-   */
+
   public setConsoleOutput(enable: boolean): void {
     this.enableConsoleOutput = enable;
   }

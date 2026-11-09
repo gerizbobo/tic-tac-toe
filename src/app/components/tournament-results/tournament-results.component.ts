@@ -63,14 +63,6 @@ export class TournamentResultsComponent implements OnInit {
     this.gameService.resetGame();
   }
 
-  /**
-   * Get a formatted result string for a game
-   * Example: "Player 1 wins" or "Draw"
-   * 
-   * @param tournament - The tournament containing game history
-   * @param gameIndex - The index of the game in history
-   * @returns Formatted result string
-   */
   public getGameResult(tournament: Tournament | null, gameIndex: number): string {
     if (!tournament || !tournament.gameHistory[gameIndex]) {
       return '';
@@ -85,12 +77,6 @@ export class TournamentResultsComponent implements OnInit {
     return `${gameResult.winner?.name} wins`;
   }
 
-  /**
-   * Get the final tournament message
-   * 
-   * @param tournament - The tournament
-   * @returns Message string
-   */
   public getFinalMessage(tournament: Tournament | null): string {
     if (!tournament || !tournament.isCompleted) {
       return '';
@@ -103,13 +89,7 @@ export class TournamentResultsComponent implements OnInit {
     return `${tournament.winner.name} wins the tournament!`;
   }
 
-  /**
-   * Get win percentage for a player
-   * 
-   * @param tournament - The tournament
-   * @param playerId - The player ID (1 or 2)
-   * @returns Win percentage as a string (e.g., "66%")
-   */
+
   public getWinPercentage(tournament: Tournament | null, playerId: number): string {
     if (!tournament || tournament.totalGames === 0) {
       return '0%';

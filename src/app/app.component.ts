@@ -11,16 +11,7 @@ import { GameBoardComponent } from './components/game-board/game-board.component
 import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
 import { TournamentResultsComponent } from './components/tournament-results/tournament-results.component';
 
-/**
- * AppComponent
- * Main component that orchestrates the entire tournament application
- * 
- * Manages:
- * - Transition between different screens (setup, game, results)
- * - Tournament state
- * - Game state
- * - Communication between services and components
- */
+
 @Component({
     selector: 'app-root',
     imports: [
@@ -40,7 +31,7 @@ export class AppComponent implements OnInit {
   public currentTournament: Tournament | null = null;
   public currentGameState: GameState | null = null;
 
-  // State flags to determine which screen to display
+
   public showSetup: boolean = true;
   public showGame: boolean = false;
   public showResults: boolean = false;
@@ -51,36 +42,25 @@ export class AppComponent implements OnInit {
     private logger: LoggerService
   ) { }
 
-  /**
-   * Initialize the application
-   * Subscribe to tournament and game state
-   * Set up screen transitions
-   */
+ 
   ngOnInit(): void {
     this.tournament$ = this.tournamentService.tournament$;
     this.gameState$ = this.gameService.gameState$;
 
-    // Subscribe to tournament state changes
+
     this.tournament$.subscribe(tournament => {
       this.currentTournament = tournament;
       this.updateScreenDisplay();
     });
 
-    // Subscribe to game state changes
+
     this.gameState$.subscribe(gameState => {
       this.currentGameState = gameState;
       this.handleGameStateChange();
     });
   }
 
-  /**
-   * Update which screen to display based on tournament state
-   * 
-   * Screen logic:
-   * - No tournament: Show setup screen
-   * - Tournament active: Show game board
-   * - Tournament completed: Show results
-   */
+
   private updateScreenDisplay(): void {
     if (!this.currentTournament) {
       this.showSetup = true;
@@ -97,31 +77,24 @@ export class AppComponent implements OnInit {
     }
   }
 
-  /**
-   * Handle game state changes
-   * Update tournament when a game ends
-   */
+
   private handleGameStateChange(): void {
     if (!this.currentGameState || !this.currentTournament) {
       return;
     }
 
-    // If game just ended, record the result
+
     if (this.currentGameState.isGameOver) {
       this.recordGameResult();
     }
   }
 
-  /**
-   * Record the result of the current game in the tournament
-   * This is called automatically when a game ends
-   */
+
   private recordGameResult(): void {
     if (!this.currentGameState || !this.currentTournament) {
       return;
     }
 
-    // Determine winner
     let winner = null;
     if (this.currentGameState.winner) {
       if (this.currentGameState.winner === 'X') {
@@ -135,7 +108,6 @@ export class AppComponent implements OnInit {
       }
     }
 
-    // Record result only once
     const lastGameInHistory = this.currentTournament.gameHistory[
       this.currentTournament.gameHistory.length - 1
     ];
@@ -145,10 +117,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  /**
-   * Get the current screen display state
-   * Used for debugging/development
-   */
   public getScreenState(): string {
     if (this.showSetup) return 'SETUP';
     if (this.showGame) return 'GAME';
@@ -156,10 +124,7 @@ export class AppComponent implements OnInit {
     return 'UNKNOWN';
   }
 
-  /**
-   * Handle game finished event from GameBoardComponent
-   * Called when all tournament games are completed
-   */
+
   public onGameFinished(): void {
     this.updateScreenDisplay();
   }
